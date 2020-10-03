@@ -18,6 +18,7 @@ class BooksController < ApplicationController
     @books = Book.all
     @user = @book.user
     @users= User.all
+    
   end 
    
   def show

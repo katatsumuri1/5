@@ -98,6 +98,10 @@
     <td>
     <span><%= book.body %></span>
     </td>
+    <td>
+    <i class="fa fa-comment"></i>
+    <a href="#comments">コメント数 :<%= @book.book_comments.count %></a>
+    </td>
 
   </tr>
   <% end %>
