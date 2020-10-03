@@ -1,0 +1,33 @@
+<h1>User info</h1>
+<% if @user.errors.any? %>
+    
+  <div class="alert-warning">
+    <div class="alert1">
+    <p><%= pluralize(@user.errors.count, "error") %></p>
+    </div>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model:@user, local:true do |f| %>
+  
+<div class ="field">
+    <%= f.label :name %>
+    <%= f.text_field :name, autofocus: true, class:"form-control", id:"inputEmail", placeholder:"名前"%>
+</div>
+<div class ="field">
+    <%= f.label :image %></br>
+    <%= f.attachment_field :profile_image %>
+</div>
+<div class ="field">
+    <%= f.label :introduction %>
+    <%= f.text_area :introduction %>
+</div>
+ <%= f.submit "Update User" %>
+</div>
+<% end %>
+

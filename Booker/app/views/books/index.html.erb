@@ -1,0 +1,132 @@
+<div class="container">
+<div class="row">
+  <div class="col-xs-3">
+    <h2>User info</h2>
+ 
+
+  <%= attachment_image_tag current_user, :profile_image, :fill, 100,100, format: "jpeg", fallback: "no_image.jpg" %>
+  
+  <table class="table">
+    <tbody>
+  <tr>
+    <th>name</th>
+    <th class="profile-name"><%= current_user.name %></th>
+  </tr>
+  <tr>
+   <th>introduction</th>
+   <th><%= current_user.introduction %></th>
+   </tr>
+</tbody>
+</table>
+
+
+ 
+
+  <%= link_to"", edit_user_path(current_user), class: "btn btn-default btn-block glyphicon glyphicon-wrench"  %>
+  
+
+<h2>New book </h2>
+
+<% if @book.errors.any? %>
+    
+  <div class="alert-warning">
+    <div class="alert1">
+    <p><%= pluralize(@book.errors.count, "error") %></p>
+    </div>
+    <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+  <%= form_with model: @book,  local:true do |f| %>
+  
+  
+  <div class="form-group">
+      <%= f.label :title %></br>
+      <%= f.text_field :title, class: 'form-control' %>
+  </div>
+
+<div class ="form-group">
+    <%= f.label :opnion %></br>
+    <%= f.text_area :body, class: 'form-control' %>
+</div>
+<div class ="form-group">
+ <button type="submit" class="btn btn-primary btn-block">Create Book</button>
+</div>
+<% end %>
+ </div>
+
+
+
+<div class="col-xs-9">
+  
+ 
+ <table class=table>
+   <h1>Books</h1>
+  <thead>
+  <tr>
+   <th></th>
+   <th>Title</th>
+   <th>Opinion</th>
+   <th></th>
+  </tr>
+  </thead>
+  
+  <tbody>
+      <% @books.each do |book| %>
+  <tr>
+    
+     <td>
+    <%= link_to user_path(book.user) do%>
+    <%= attachment_image_tag book.user, :profile_image, :fill, 100,100, format: "jpeg", fallback: "no_image.jpg" %>
+     <% end %>
+    </td>
+   
+    <td>
+    <%= link_to book.title,book_path(book) %>
+    </td>
+
+    <td>
+    <span><%= book.body %></span>
+    </td>
+    <td>
+    <!--↓いいね-->
+        <% if book.favorited_by?(current_user) %>
+         <div>
+         <%= link_to book_favorites_path(book), method: :delete do %>
+       
+         
+			<span class="glyphicon glyphicon-heart" aria-hidden="true" ></span>
+         <%= book.favorites.count %>
+         <%end%>
+         </div>
+         <% else %>
+         <div>
+           <%= link_to book_favorites_path(book), method: :post do %>
+     
+			<span class="glyphicon glyphicon-heart-empty"></span>
+           <%= book.favorites.count %>
+           <% end %>
+         </div>
+         <% end %>
+         
+         
+    
+  </td>
+
+    <td>
+    <i class="fa fa-comment"></i>
+    <a href="#comments">コメント数 :<%= @book.book_comments.count %></a>
+    </td>
+   
+  </tr>
+  <% end %>
+  </tbody>
+  </table>
+</div>
+</div>
+</div>
