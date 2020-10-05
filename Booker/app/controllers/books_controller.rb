@@ -26,6 +26,7 @@ class BooksController < ApplicationController
     @user = @book.user
     @books = Book.new
     @book_comment = BookComment.new
+    
   end  
   
   def edit
@@ -49,6 +50,9 @@ class BooksController < ApplicationController
     render :edit
     end
   end
+  
+  
+  
   
   private
 

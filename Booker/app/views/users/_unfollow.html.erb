@@ -1,0 +1,4 @@
+<% relationship = current_user.active_relationships.find_by(followed_id: user.id) %>
+<%= form_with url: relationship_path(relationship), method: :delete do %>
+  <%= submit_tag "フォロー外す", class: "btn-primary" %>
+<% end %>

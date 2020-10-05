@@ -13,5 +13,13 @@ get 'home/about' => 'home#about'
    resources :book_comments, only: [:create, :destroy]
    end
    resources :users, only:[:show, :index, :edit, :update]
+   resources :users do
+    member do
+      get :following
+      get :followers
+    end
+  end
+  
+   resources :relationships, only: [:create, :destroy,:index]
 
 end
