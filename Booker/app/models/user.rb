@@ -18,7 +18,20 @@ class User < ApplicationRecord
   attachment :profile_image
   validates :name, presence: true, length: { minimum: 2 , maximum: 20 }
   validates :introduction, length: { maximum: 50 }
-
+  
+  def self.search_user(search,word)
+      if search == "forward_match"
+          @user = User.where(["name LIKE?","#{word}%"])
+      elsif search == "backward_match"
+           @user = User.where(["name LIKE?","%#{word}"])
+      elsif search == "perfect_match"
+          @user = User.where(name:"word")
+      elsif search == "partial_match"
+          @user = User.where(["name LIKE?","%#{word}%"])
+      else
+           User.all
+      end
+  end
      # ユーザーをフォローする
   def follow(other_user)
     active_relationships.create(followed_id: other_user.id)
@@ -39,4 +52,5 @@ class User < ApplicationRecord
   def following?(other_user)
     following.include?(other_user)
   end
+  
 end

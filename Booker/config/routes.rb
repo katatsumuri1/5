@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
 
 
+ 
   devise_for :users
 
  root to: 'home#start'
-get 'home/about' => 'home#about' 
+ get 'search' => 'search#search'
+ get 'home/about' => 'home#about' 
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
@@ -13,6 +15,8 @@ get 'home/about' => 'home#about'
    resources :book_comments, only: [:create, :destroy]
    end
    resources :users, only:[:show, :index, :edit, :update]
+   
+   
    resources :users do
     member do
       get :following

@@ -66,12 +66,43 @@
     <% end %>
   </ul>
 </div>
+
   </header>
 </div>
 
    <% flash.each do |message_type, message| %>
     <%= message %>
     <% end %>
+    
+    <!--↓検索機能-->
+    
+    <div class= "container">
+      <div class= "row">
+        <div class="col-xs-6 col-xs-offset-3">
+          <% if user_signed_in? %>
+       <%= form_with url:search_path, method: :get, data: {remote: false},html: {class:"form-inline"} do |f| %>
+           
+           <div class="form-group">
+           <%= f.text_field :word %>
+           </div>
+           
+           <div class="form-group">
+           <%= f.select :range, {'User': '1', 'Book': '2'}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
+           </div>
+           
+           <div class="form-group">
+             <%= f.select :search, {"前方一致": "forward_match", "後方一致": "backward_match", "部分一致":"partial_match","完全一致": "perfect_match" }, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
+           </div>
+           <div class="form-group">
+           <button type="submit" class="btn btn-primary btn-block">検索</button>
+           </div>
+          <% end %>
+         <% end %>
+       
+      </div>
+    </div>
+    </div>
+<!--終了-->
 
    <%= yield %>
   <footer>
